@@ -25,7 +25,7 @@ Installing **Badger** is as simple as pie:
 ```bash
 git clone https://github.com/voxel51/badger.git
 cd badger
-python setup.py install
+pip install -e .
 ```
 
 ## 📝 Usage
