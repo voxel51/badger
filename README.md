@@ -109,6 +109,15 @@ badger list
 
 Lists all the badges you have created.
 
+```plaintext
+Available badges:
+Badge Name           URL                                                Color                Text
+--------------------------------------------------------------------------------------------------------------
+badger               https://github.com/voxel51/badger                  blue                 Badger
+voxel51_ada          https://github.com/voxel51/fiftyone                blue                 voxel51
+voxel51              https://github.com/voxel51/fiftyone                blue                 voxel51
+```
+
 ### 🗑️ Delete a Badge
 
 ```bash
