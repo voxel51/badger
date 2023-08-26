@@ -1,7 +1,7 @@
 # 🦡 Badger - Custom Badges Made Easy 🌈
 
 [![Badger Badge](https://img.shields.io/badge/Badger-blue.svg?style=flat&logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+CiAgICA8IS0tIEJhY2tncm91bmQgLS0+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0id2hpdGUiLz4KICAgIAogICAgPCEtLSBCYWRnZXIgQm9keSAtLT4KICAgIDxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMDAiIHJ4PSI4MCIgcnk9IjYwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAKICAgIDwhLS0gQmFkZ2VyIEZhY2UgLS0+CiAgICA8ZWxsaXBzZSBjeD0iMTAwIiBjeT0iMTAwIiByeD0iNTAiIHJ5PSI0MCIgZmlsbD0iI2ZmZmZmZiIvPgogICAgCiAgICA8IS0tIEJhZGdlciBTdHJpcGVzIC0tPgogICAgPHJlY3QgeD0iMjUiIHk9IjYwIiB3aWR0aD0iMTAiIGhlaWdodD0iODAiIGZpbGw9IndoaXRlIi8+CiAgICA8cmVjdCB4PSIxNjUiIHk9IjYwIiB3aWR0aD0iMTAiIGhlaWdodD0iODAiIGZpbGw9IndoaXRlIi8+CiAgICAKICAgIDwhLS0gQmFkZ2VyIEV5ZXMgLS0+CiAgICA8Y2lyY2xlIGN4PSI4MCIgY3k9IjkwIiByPSI1IiBmaWxsPSJ3aGl0ZSIvPgogICAgPGNpcmNsZSBjeD0iMTIwIiBjeT0iOTAiIHI9IjUiIGZpbGw9IndoaXRlIi8+CiAgICAKICAgIDwhLS0gRXllIEhpZ2hsaWdodHMgLS0+CiAgICA8Y2lyY2xlIGN4PSI4MiIgY3k9Ijg4IiByPSIxIiBmaWxsPSJ3aGl0ZSIvPgogICAgPGNpcmNsZSBjeD0iMTIyIiBjeT0iODgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CiAgICAKICAgIDwhLS0gQmFkZ2VyIE5vc2UgLS0+CiAgICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMTAiIHI9IjUiIGZpbGw9IndoaXRlIi8+CiAgICAKICAgIDwhLS0gTm9zZSBIaWdobGlnaHQgLS0+CiAgICA8Y2lyY2xlIGN4PSIxMDIiIGN5PSIxMDgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CiAgICAKICAgIDwhLS0gQmFkZ2VyIEVhcnMgLS0+CiAgICA8ZWxsaXBzZSBjeD0iNzAiIGN5PSI3MCIgcng9IjEwIiByeT0iMTUiIGZpbGw9IiMwMDAwMDAiLz4KICAgIDxlbGxpcHNlIGN4PSIxMzAiIGN5PSI3MCIgcng9IjEwIiByeT0iMTUiIGZpbGw9IiMwMDAwMDAiLz4KPC9zdmc+)](https://github.com/voxel51/badger)
-[![Build Status](https://img.shields.io/travis/com/yourusername/badger)](https://travis-ci.com/yourusername/badger) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/voxel51/badger/blob/main/LICENSE)
 
 ---
 
@@ -166,9 +166,40 @@ Prints the help message.
 - Custom Styles
 - ... and much more! 🌈
 
-## 📚 Examples
+Once you have created a badge (added it to your config), you can work with modified versions of that badge incredibly easily using the following command line arguments, which can be passed along with the `copy` and `print` commands:
 
-Here are some examples of badges you can create with Badger:
+- `--color`: The color of the badge
+- `--logo`: The logo color of the badge
+- `--text`: The text of the badge
+- `--style`: The style of the badge
+- `--url`: The URL the badge points to
+
+### Editing the Config File
+
+You can also edit the config file directly to customize your badges. The config file is located at `~/.badger` and has the following format:
+
+```yml
+badges:
+  badger:
+    color: blue
+    logo: /Users/jacobmarks/Desktop/work/badger/src/badger.svg
+    logoColor: white
+    text: Badger
+    url: https://github.com/voxel51/badger
+  voxel51_ada:
+    color: blue
+    logoColor: white
+    logo: /Users/jacobmarks/Desktop/work/badger/src/fiftyone.svg
+    text: voxel51
+    url: https://github.com/voxel51/fiftyone
+  voxel51:
+    color: blue
+    logo: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
+    text: voxel51
+    url: https://github.com/voxel51/fiftyone
+```
+
+You can add, remove, and edit badges as you see fit. Badger will automatically detect changes to the config file and update your badges accordingly.
 
 ## 💡 Why You Absolutely Need This
 
