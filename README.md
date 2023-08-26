@@ -77,6 +77,8 @@ Commonly used colors:
 > Successfully added badge 'voxel51_ada'.
 ```
 
+💡 You can also create a badge from an SVG at a URL! If you do so, the content of the SVG will be retrieved at badge generation time using `requests`.
+
 ### 📋 Copy a Badge to Clipboard
 
 ```bash
