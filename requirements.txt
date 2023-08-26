@@ -1,1 +1,3 @@
 pyperclip
+# openai
+# requests
