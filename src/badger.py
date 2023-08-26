@@ -111,18 +111,41 @@ def list_badges(badges):
         )
 
 
+# def change_svg_color(svg_data, new_color="#000000"):
+#     # Parse the SVG data
+#     doc = minidom.parseString(svg_data)
+
+#     # Find all 'fill' attributes
+#     for element_name in ["path", "circle", "rect", "g"]:
+#         for element in doc.getElementsByTagName(element_name):
+#             if element.hasAttribute("fill"):
+#                 element.setAttribute("fill", new_color)
+
+#     # Convert the SVG back to a string
+#     return doc.toxml().encode("utf-8")
+
+
 def change_svg_color(svg_data, new_color="#000000"):
-    # Parse the SVG data
     doc = minidom.parseString(svg_data)
 
-    # Find all 'fill' attributes
+    # Handle fill attributes
     for element_name in ["path", "circle", "rect", "g"]:
         for element in doc.getElementsByTagName(element_name):
             if element.hasAttribute("fill"):
                 element.setAttribute("fill", new_color)
 
-    # Convert the SVG back to a string
-    return doc.toxml().encode("utf-8")
+    # Handle style tags
+    for style in doc.getElementsByTagName("style"):
+        css_text = style.firstChild.nodeValue  # Assuming it contains text
+        new_css_text = css_text.replace(
+            ".st0{fill:#FF6D00;}", f".st0{{fill:{new_color};}}"
+        )  # Replace the color for class .st0
+        new_css_text = new_css_text.replace(
+            ".st1{fill:#9B9B9B;}", f".st1{{fill:{new_color};}}"
+        )  # Replace the color for class .st1
+        style.firstChild.replaceWholeText(new_css_text)
+
+    return doc.toxml()
 
 
 def generate_badge_markdown(badge_config):
@@ -298,7 +321,8 @@ def main():
                 badge_name = input("Enter a new name for the badge: ")
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
-        url = input("Enter the URL of the badge: ")
+        url = input("Enter the URL the badge will point to: ")
+        logo = input("Enter the path to the logo file: ")
         # List of common colors and semantic labels
         common_colors = [
             "brightgreen",
@@ -347,6 +371,7 @@ def main():
             "text": text,
             "style": style,
             "logoColor": logo_color,
+            "logo": logo,
         }
         add_badge_to_config(badge_name, new_badge_data)
 
