@@ -78,9 +78,21 @@ Deletes the badge from your config file.
 badger go-wild
 ```
 
-Generates a random badge using AI and copies it to your clipboard. 🤪
+Generates a random badge using AI and copies it to your clipboard. 🤪 This takes a `--prompt` argument that allows you to specify the prompt to use for generating the badge.
 
-:note: This uses your OpenAI API Key to call GPT 3.5
+For example:
+
+```bash
+badger go-wild --prompt "Tortoise"
+```
+
+Creates a trial badge for the Tortoise prompt.
+
+[![Trial Badge](https://img.shields.io/badge/text-blue.svg?style=flat&logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI4MCIgZmlsbD0iI2MyZDllNSIvPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iNzAiIGZpbGw9IiNmZmZmZmYiLz4KICA8cGF0aCBkPSJNMTAwIDE1MGMtNDAgMC02MC0yMC02MC00MHMyMC0yMCA0MC0zMGMxMC01IDIwLTEwIDIwLTIwIDAtMTAtNS0xNS01LTIwczUtMTUgMTUtMjAgMTUgNSAyMCAyMGMwIDUtNSAxMC01IDIwczEwIDE1IDIwIDIwYzIwIDEwIDQwIDIwIDQwIDMwcy0yMCA0MC02MCA0MHoiIGZpbGw9IiM4Y2I1YmIiLz4KICA8Y2lyY2xlIGN4PSI4NSIgY3k9IjgwIiByPSI1IiBmaWxsPSIjZmZmZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTE1IiBjeT0iODAiIHI9IjUiIGZpbGw9IiNmZmZmZmYiLz4KICA8Y2lyY2xlIGN4PSI4NSIgY3k9IjEwMCIgcj0iNSIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjExNSIgY3k9IjEwMCIgcj0iNSIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9Ijg1IiBjeT0iMTIwIiByPSI1IiBmaWxsPSIjZmZmZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTE1IiBjeT0iMTIwIiByPSI1IiBmaWxsPSIjZmZmZmZmIi8+Cjwvc3ZnPg==)](https://github.com/voxel51/badger)
+
+You can then save the badge to your config file by entering `y` when prompted and follow the instructions to save the badge.
+
+> 💡 This uses your OpenAI API Key to call GPT 3.5
 
 ### ❓ Get Help
 
