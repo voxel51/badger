@@ -39,7 +39,7 @@ def create_default_config(file_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Build the path to badger.svg relative to the script's location
-    badger_svg_path = os.path.join(script_dir, "badger.svg")
+    badger_svg_path = os.path.join(script_dir, "../assets/badger.svg")
 
     default_badge = {
         "badger": {
