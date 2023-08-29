@@ -47,9 +47,10 @@ badger create voxel51_ada
 Begins the process of creating an ADA compliant badge for Voxel51 named `voxel51_ada`:
 
 ```plaintext
-> Enter the URL the badge will point to: https://github.com/voxel51/fiftyone
 
-> Enter the path to the logo file: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
+> Enter a name for this badge: voxel51_ada
+
+> Enter the badge text: voxel51
 
 Commonly used colors:
 1. brightgreen
@@ -68,16 +69,24 @@ Commonly used colors:
 
 > Enter the color of the badge (or choose a number from the list above): blue
 
-> Enter the text of the badge: Voxel51
+> Enter the badge logo: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
 
-> Enter the style of the badge (flat, flat-square, plastic, for-the-badge, social), or press Return to skip: flat
+> Enter the badge URL: https://github.com/voxel51/fiftyone
 
-> Enter the logo color of the badge, or press Return to skip: white
+> Enter the badge style: flat
+
+> Enter the badge logoColor: white
+
+> Enter the badge label:
+
+> Enter the badge labelColor:
+
+> Enter the badge logoWidth:
 
 > Successfully added badge 'voxel51_ada'.
 ```
 
-💡 You can also create a badge from an SVG at a URL! If you do so, the content of the SVG will be retrieved at badge generation time using `requests`.
+💡 As show in this example, you can create a badge from an SVG at a URL! If you do so, the content of the SVG will be retrieved at badge generation time using `requests`. You can also use local SVGs by specifying the relative or absolute path to the SVG file.
 
 ### 📋 Copy a Badge to Clipboard
 
