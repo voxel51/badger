@@ -116,8 +116,9 @@ Available badges:
 Badge Name           URL                                                Color                Text
 --------------------------------------------------------------------------------------------------------------
 badger               https://github.com/voxel51/badger                  blue                 Badger
-voxel51_ada          https://github.com/voxel51/fiftyone                blue                 voxel51
 voxel51              https://github.com/voxel51/fiftyone                blue                 voxel51
+voxel51_ada          https://github.com/voxel51/fiftyone                blue                 voxel51
+svg-repo-atom        https://www.svgrepo.com/svg/530661/genetic-data    grey                 Atom
 ```
 
 ### 🗑️ Delete a Badge
@@ -127,6 +128,22 @@ badger delete badge_name
 ```
 
 Deletes the badge from your config file.
+
+### 🪞 Clone a Badge
+
+```bash
+badger clone badge_name new_badge_name
+```
+
+Clones the badge with the name `badge_name` and saves it with the name `new_badge_name`.
+
+### 🖋️ Edit a Badge
+
+```bash
+badger edit badge_name --color success
+```
+
+Edits the badge with the name `badge_name` and sets the color to `success`.
 
 ### ✨ Go Wild!
 
@@ -193,27 +210,85 @@ You can also edit the config file directly to customize your badges. The config 
 ```yml
 badges:
   badger:
-    logo: /Users/jacobmarks/Desktop/work/badger/assets/badger.svg
-    url: https://github.com/voxel51/badger
     color: blue
-    logoColor: white
-    text: Badger
     labelColor: grey
+    logo: /Users/jacobmarks/Desktop/work/badger/assets/badger.svg
+    logoColor: white
     style: flat
-  voxel51_ada:
-    logo: /Users/jacobmarks/Desktop/work/badger/src/fiftyone.svg
-    url: https://github.com/voxel51/fiftyone
+    text: Badger
+    url: https://github.com/voxel51/badger
+  voxel51:
     color: blue
+    logo: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
+    text: voxel51
+    url: https://github.com/voxel51/fiftyone
+  voxel51_ada:
+    color: blue
+    logo: /Users/jacobmarks/Desktop/work/badger/assets/fiftyone.svg
     logoColor: white
     text: voxel51
-  voxel51:
-    logo: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
     url: https://github.com/voxel51/fiftyone
-    color: blue
-    text: voxel51
+  svg-repo-atom:
+    color: grey
+    labelColor: blue
+    logo: https://www.svgrepo.com/download/530661/genetic-data.svg
+    logoColor: white
+    text: Atom
+    url: https://www.svgrepo.com/svg/530661/genetic-data
+    style: plastic
 ```
 
 You can add, remove, and edit badges as you see fit. Badger will automatically detect changes to the config file and update your badges accordingly.
+
+💡 You can also set the location of the config file in your environment variables using the `BADGER_CONFIG_FILE` variable.
+
+## Where to Get Badges
+
+If you're looking for some cool badges to use, check out these resources:
+
+### Free-to-Use SVGs
+
+- [Simple Icons](https://simpleicons.org/)
+- [SVG Repo](https://www.svgrepo.com/)
+- [Icon Monstr](https://iconmonstr.com/)
+- [Font Awesome](https://fontawesome.com/)
+
+Because `Badger` supports copying and printing badges with SVGs at URLs, you can use any of the above resources to generate badges on-the-fly! 🎉
+
+Just click into the SVG you want to use, copy the URL, and use it as the `logo` argument when creating a badge.
+
+Here's an example from SVG Repo with [this](https://www.svgrepo.com/svg/530661/genetic-data) SVG:
+
+```yaml
+badges:
+  ...
+  svg-repo-atom:
+    color: grey
+    logo: https://www.svgrepo.com/download/530661/genetic-data.svg
+    logoColor: white
+    text: Atom
+    url: https://www.svgrepo.com/svg/530661/genetic-data
+    style: for-the-badge
+  ...
+```
+
+With this in your Badger config file, running `badger copy svg-repo-atom` will copy the following badge to your clipboard: [![Atom Badge](https://img.shields.io/badge/Atom-grey.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgY2xhc3M9Imljb24iIHZlcnNpb249IjEuMSI+PHBhdGggZD0iTTUxMiA5NjBjLTkyLjggMC0xNjAtMjAwLTE2MC00NDhTNDE5LjIgNjQgNTEyIDY0czE2MCAyMDAgMTYwIDQ0OC02Ny4yIDQ0OC0xNjAgNDQ4eiBtMC0zMmM2NS42IDAgMTI4LTE4NS42IDEyOC00MTZTNTc3LjYgOTYgNTEyIDk2cy0xMjggMTg1LjYtMTI4IDQxNiA2Mi40IDQxNiAxMjggNDE2eiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNMTI0LjggNzM2Yy00OC04MCA5Mi44LTIzOC40IDMwNy4yLTM2My4yUzg1Mi44IDIwOCA4OTkuMiAyODggODA2LjQgNTI2LjQgNTkyIDY1MS4yIDE3MS4yIDgxNiAxMjQuOCA3MzZ6IG0yNy4yLTE2YzMzLjYgNTcuNiAyMjUuNiAxNy42IDQyNC05Ny42UzkwNS42IDM2MS42IDg3MiAzMDQgNjQ2LjQgMjg2LjQgNDQ4IDQwMS42IDExOC40IDY2Mi40IDE1MiA3MjB6IiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik04OTkuMiA3MzZjLTQ2LjQgODAtMjU0LjQgMzguNC00NjcuMi04NC44Uzc2LjggMzY4IDEyNC44IDI4OHMyNTQuNC0zOC40IDQ2Ny4yIDg0LjhTOTQ3LjIgNjU2IDg5OS4yIDczNnogbS0yNy4yLTE2YzMzLjYtNTcuNi05Ny42LTIwMy4yLTI5Ni0zMTguNFMxODQgMjQ2LjQgMTUyIDMwNCAyNDkuNiA1MDcuMiA0NDggNjIyLjRzMzkyIDE1NS4yIDQyNCA5Ny42eiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNNTEyIDU5MmMtNDQuOCAwLTgwLTM1LjItODAtODBzMzUuMi04MCA4MC04MCA4MCAzNS4yIDgwIDgwLTM1LjIgODAtODAgODB6TTI3MiAzMTJjLTI3LjIgMC00OC0yMC44LTQ4LTQ4czIwLjgtNDggNDgtNDggNDggMjAuOCA0OCA0OC0yMC44IDQ4LTQ4IDQ4ek00MTYgODgwYy0yNy4yIDAtNDgtMjAuOC00OC00OHMyMC44LTQ4IDQ4LTQ4IDQ4IDIwLjggNDggNDgtMjAuOCA0OC00OCA0OHogbTQ0OC00MzJjLTI3LjIgMC00OC0yMC44LTQ4LTQ4czIwLjgtNDggNDgtNDggNDggMjAuOCA0OCA0OC0yMC44IDQ4LTQ4IDQ4eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=&style=plastic&labelColor=blue)](https://www.svgrepo.com/svg/530661/genetic-data)
+
+### Simplifying SVGs
+
+Occassionally, you may find that the SVG you want to use is too complex for shields.io or Github's rendering handle. In this case, you can simplify the SVG using the SVG optimizer [SVGO](https://github.com/svg/svgo).
+
+You can install SVGO using:
+
+```bash
+npm install -g svgo
+```
+
+And then simplify your SVG using:
+
+```bash
+svgo -i input.svg -o output.svg
+```
 
 ## 💡 Why You Absolutely Need This
 
