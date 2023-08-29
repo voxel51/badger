@@ -124,59 +124,6 @@ def generate_badge_markdown(badge_config):
     return badge_markdown
 
 
-# def generate_badge_markdown(badge_config):
-#     """
-#     Generate Markdown for a badge based on its configuration.
-#     """
-#     text = badge_config.get("text", "N/A")
-#     color = badge_config.get("color", "blues")
-#     logo_file_or_url = badge_config.get("logo", "N/A")
-#     url = badge_config.get("url", "N/A")
-#     style = badge_config.get("style", "flat")
-#     logo_color = badge_config.get("logoColor", None)
-
-#     if not url.startswith("http"):
-#         print(f"Invalid URL '{url}'.")
-#         return
-#     if logo_file_or_url == "N/A":
-#         print("No logo file or URL provided.")
-#         return
-
-#     # Check if it's a URL or a local file
-#     if logo_file_or_url.startswith("http://") or logo_file_or_url.startswith(
-#         "https://"
-#     ):
-#         # Fetch the SVG from the URL
-#         import requests
-
-#         response = requests.get(logo_file_or_url)
-#         svg_data = response.text
-#     else:
-#         logo_file = os.path.expanduser(logo_file_or_url)
-#         if not os.path.exists(logo_file):
-#             print(f"Logo file '{logo_file}' not found.")
-#             return
-#         # Read the SVG from a local file
-#         with open(logo_file, "r") as svg_file:
-#             svg_data = svg_file.read()
-
-#     if logo_color:
-#         svg_data = change_svg_color(svg_data, logo_color)
-
-#     if isinstance(svg_data, str):
-#         svg_data = svg_data.encode("utf-8")
-#     # Encode in base64 and decode it to ASCII
-#     b64_logo = base64.b64encode(svg_data).decode("ascii")
-
-#     badge_text = text.replace(" ", "%20").strip()
-
-#     badge_pattern = (
-#         f"[![{text} Badge](https://img.shields.io/badge/{badge_text}-{color}.svg?"
-#         f"style={style}&logo=data:image/svg+xml;base64,{b64_logo})]({url})"
-#     )
-#     return badge_pattern
-
-
 def save_svg_file(svg_data):
     file_name = input("Enter the filename to save as: ")
     file_name = f"{os.path.expanduser(file_name)}"

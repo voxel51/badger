@@ -152,42 +152,6 @@ def create_badge(args, config):
         if value:  # Only add non-empty values to the config
             new_badge_data[key] = value
 
-    # url = input("Enter the URL the badge will point to: ")
-    # logo = input("Enter the path to the logo file: ")
-    # print("Commonly used colors:")
-    # for i, color in enumerate(COMMON_COLORS, 1):
-    #     print(f"{i}. {color}")
-
-    # color_choice = input(
-    #         "Enter the color of the badge (or choose a number from the list above): "
-    #     )
-
-    # # If the user enters a number, map it to the corresponding color
-    # if color_choice.isdigit():
-    #     color_choice = int(color_choice) - 1
-    #     if 0 <= color_choice < len(COMMON_COLORS):
-    #         color = COMMON_COLORS[color_choice]
-    #     else:
-    #         print("Invalid choice, using default color 'blue'.")
-    #         color = "blue"
-    # else:
-    #     color = color_choice
-
-    # text = input("Enter the text of the badge: ")
-    # style = input(
-    #     "Enter the style of the badge (flat, flat-square, plastic, for-the-badge, social), or press Return to skip: "
-    # )
-    # logo_color = input("Enter the logo color of the badge, or press Return to skip: ")
-
-    # new_badge_data = {
-    #     "url": url,
-    #     "color": color,
-    #     "text": text,
-    #     "style": style,
-    #     "logoColor": logo_color,
-    #     "logo": logo,
-    # }
-
     # Update the badges dictionary and save it back to the config file
     badges[badge_name] = new_badge_data
     config.update_config(badges)
