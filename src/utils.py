@@ -31,6 +31,35 @@ def list_badges(badges):
         )
 
 
+def print_badge_info(badge_name, config):
+    """
+    Print the details of the given badge.
+    """
+    # Check if the badge exists
+    if badge_name not in config:
+        print(f"No badge found with the name '{badge_name}'.")
+        return
+
+    badge_config = config[badge_name]
+    print(f"Badge: {badge_name}")
+    print("-" * 110)
+
+    props = [
+        ("URL", "url"),
+        ("Color", "color"),
+        ("Text", "text"),
+        ("Logo", "logo"),
+        ("Style", "style"),
+        ("Label", "label"),
+        ("Label Color", "labelColor"),
+        ("Logo Width", "logoWidth"),
+        ("Logo Color", "logoColor"),
+    ]
+
+    for prop in props:
+        print(f"{prop[0]}: {badge_config.get(prop[1], 'N/A')}")
+
+
 def change_svg_color(svg_data, new_color="#000000"):
     """
     Change the color attributes in the given SVG data.

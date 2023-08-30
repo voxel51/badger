@@ -154,6 +154,28 @@ badger edit badge_name --color success
 
 Edits the badge with the name `badge_name` and sets the color to `success`.
 
+### Get Info About a Badge
+
+```bash
+badger info badge_name
+```
+
+Prints information about the badge with the name `badge_name`.
+
+```plaintext
+Badge: badger
+--------------------------------------------------------------------------------------------------------------
+URL: https://github.com/voxel51/badger
+Color: blue
+Text: Badger
+Logo: /Users/jacobmarks/Desktop/work/badger/assets/badger.svg
+Style: flat
+Label: N/A
+Label Color: grey
+Logo Width: N/A
+Logo Color: white
+```
+
 ### ✨ Go Wild!
 
 ```bash

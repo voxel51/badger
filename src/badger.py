@@ -46,6 +46,7 @@ from .utils import (
     generate_badge_markdown,
     save_svg_file,
     save_as_badge,
+    print_badge_info,
 )
 
 from .go_wild_utils import generate_random_svg, generate_trial_badge
@@ -324,6 +325,11 @@ def go_wild(args, config):
         save_as_badge(file_name, config)
 
 
+def get_badge_info(args, config):
+    badge_name = args.badge_name
+    print_badge_info(badge_name, config.load_config())
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Manage custom badges for GitHub READMEs."
@@ -378,6 +384,10 @@ def main():
         "--prompt", help="Subject of the SVG to generate.", default="badger"
     )
 
+    ### INFO
+    info_parser = subparsers.add_parser("info", help="Get info about a badge.")
+    info_parser.add_argument("badge_name", help="Name of the badge.")
+
     ### LIST BADGES AND HELP
     subparsers.add_parser("list", help="List available badges.")
     subparsers.add_parser("help", help="List available commands.")
@@ -402,6 +412,8 @@ def main():
         edit_badge(args, badger_config)
     elif args.command == "go-wild":
         go_wild(args, badger_config)
+    elif args.command == "info":
+        get_badge_info(args, badger_config)
     elif args.command == "list":
         list_badges(badges)
     elif args.command == "help":
