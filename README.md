@@ -154,7 +154,7 @@ badger edit badge_name --color success
 
 Edits the badge with the name `badge_name` and sets the color to `success`.
 
-### Get Info About a Badge
+### ℹ️ Get Info About a Badge
 
 ```bash
 badger info badge_name
