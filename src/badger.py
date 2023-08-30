@@ -283,13 +283,13 @@ def edit_badge(args, config):
     for key, value in badge_config.items():
         print(f"{key}: {value}")
 
+    print("Performing edit...")
     # Edit settings
     for key in KEYS:
-        new_value = input(
-            f"Enter new value for {key} (current: {badge_config.get(key, 'N/A')}), or press Return to keep: "
-        )
-        if new_value:
+        new_value = getattr(args, key, None)
+        if new_value is not None:
             badge_config[key] = new_value
+            print(f"--> Updated {key} to {new_value}.")
 
     # Update the badge and config file
     badges[badge_name] = badge_config
@@ -348,6 +348,10 @@ def main():
         "badge_name", help="Name of the badge to delete."
     )
 
+    ### EDIT
+    edit_parser = subparsers.add_parser("edit", help="Edit a badge.")
+    edit_parser.add_argument("badge_name", help="Name of the badge to edit.")
+
     ### COPY
     copy_parser = subparsers.add_parser(
         "copy", help="Copy badge Markdown to clipboard."
@@ -365,7 +369,7 @@ def main():
     clone_parser.add_argument("badge_name", help="Name of the badge to clone.")
     clone_parser.add_argument("new_badge_name", help="Name of the new badge.")
 
-    for sp in [copy_parser, print_parser, clone_parser]:
+    for sp in [copy_parser, print_parser, clone_parser, edit_parser]:
         sp.add_argument("--text", help="Text override.")
         sp.add_argument("--color", help="Color override.")
         sp.add_argument("--logo", help="Logo file override.")
