@@ -245,7 +245,14 @@ def clone_badge(args, config):
 
     # Clone the badge
     original_badge_data = badges[original_badge_name]
-    badges[new_badge_name] = original_badge_data
+    new_badge_data = original_badge_data.copy()
+
+    # Override the defaults with any provided command-line arguments
+    for key in KEYS:
+        if getattr(args, key, None):
+            new_badge_data[key] = getattr(args, key)
+
+    badges[new_badge_name] = new_badge_data
 
     # Update the config file
     config.update_config(badges)
@@ -340,35 +347,28 @@ def main():
         "copy", help="Copy badge Markdown to clipboard."
     )
     copy_parser.add_argument("badge_name", help="Name of the badge to copy.")
-    copy_parser.add_argument("--text", help="Text override.")
-    copy_parser.add_argument("--color", help="Color override.")
-    copy_parser.add_argument("--logo", help="Logo file override.")
-    copy_parser.add_argument("--url", help="URL override.")
-    copy_parser.add_argument("--style", help="Style override.")
-    copy_parser.add_argument("--logoColor", help="Logo color override.")
-    copy_parser.add_argument("--label", help="Label override.")
-    copy_parser.add_argument("--labelColor", help="Label color override.")
-    copy_parser.add_argument("--logoWidth", help="Logo width override.")
 
     ### PRINT
     print_parser = subparsers.add_parser(
         "print", help="Print badge Markdown to terminal."
     )
     print_parser.add_argument("badge_name", help="Name of the badge to print.")
-    print_parser.add_argument("--text", help="Text override.")
-    print_parser.add_argument("--color", help="Color override.")
-    print_parser.add_argument("--logo", help="Logo file override.")
-    print_parser.add_argument("--url", help="URL override.")
-    print_parser.add_argument("--style", help="Style override.")
-    print_parser.add_argument("--logoColor", help="Logo color override.")
-    print_parser.add_argument("--label", help="Label override.")
-    print_parser.add_argument("--labelColor", help="Label color override.")
-    print_parser.add_argument("--logoWidth", help="Logo width override.")
 
     ### CLONE
     clone_parser = subparsers.add_parser("clone", help="Clone a badge.")
     clone_parser.add_argument("badge_name", help="Name of the badge to clone.")
     clone_parser.add_argument("new_badge_name", help="Name of the new badge.")
+
+    for sp in [copy_parser, print_parser, clone_parser]:
+        sp.add_argument("--text", help="Text override.")
+        sp.add_argument("--color", help="Color override.")
+        sp.add_argument("--logo", help="Logo file override.")
+        sp.add_argument("--url", help="URL override.")
+        sp.add_argument("--style", help="Style override.")
+        sp.add_argument("--logoColor", help="Logo color override.")
+        sp.add_argument("--label", help="Label override.")
+        sp.add_argument("--labelColor", help="Label color override.")
+        sp.add_argument("--logoWidth", help="Logo width override.")
 
     ### GO WILD
     go_wild_parser = subparsers.add_parser(
