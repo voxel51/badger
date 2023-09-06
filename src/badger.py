@@ -55,6 +55,9 @@ from .go_wild_utils import generate_random_svg, generate_trial_badge
 class BadgerConfig:
     def __init__(self, config_file):
         self.config_file = config_file
+
+        if not os.path.exists(self.config_file):
+            create_default_config(self.config_file)
         self.config = self.load_config()
 
     def load_config(self):
