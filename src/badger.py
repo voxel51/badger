@@ -10,7 +10,9 @@ import os
 import pyperclip
 import yaml
 
-BADGER_CONFIG_FILE = os.environ.get("BADGER_CONFIG_FILE", os.path.expanduser('~')+"/.badger")
+HOME_DIR = os.path.expanduser("~")
+DEFAULT_BADGER_FILE = os.path.join(HOME_DIR, ".badger")
+BADGER_CONFIG_FILE = os.environ.get("BADGER_CONFIG_FILE", DEFAULT_BADGER_FILE)
 
 KEYS = (
     "text",
