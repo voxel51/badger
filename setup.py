@@ -13,11 +13,12 @@ setup(
     version="0.1",
     packages=find_packages(),
     install_requires=[
-        # List your project dependencies here
         "pyperclip",
-        # 'requests',  # Uncomment if you're using the requests library
-        # 'openai',    # Uncomment if you're using the OpenAI API
     ],
+    extras_require={
+        "web": ["requests"],
+        "wild": ["openai"],
+    },
     entry_points={"console_scripts": ["badger = src.badger:main"]},
     author="Voxel51, Inc.",
     author_email="info@voxel51.com",
