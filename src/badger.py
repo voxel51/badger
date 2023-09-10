@@ -44,6 +44,17 @@ COMMON_COLORS = (
     "inactive",
 )
 
+OPTIONAL_KEYS = (
+    "text",
+    "color",
+    "style",
+    "logoColor",
+    "label",
+    "labelColor",
+    "logoWidth",
+)
+
+REQUIRED_KEYS = ("logo", "url", "badge_name")
 
 from .utils import (
     list_badges,
@@ -54,6 +65,13 @@ from .utils import (
 )
 
 from .go_wild_utils import generate_random_svg, generate_trial_badge
+
+
+def get_required_string(key):
+    if key in OPTIONAL_KEYS:
+        return f"[OPTIONAL]"
+    elif key in REQUIRED_KEYS:
+        return f"[REQUIRED]"
 
 
 class BadgerConfig:
@@ -119,8 +137,9 @@ def create_badge(args, config):
         for i, color in enumerate(COMMON_COLORS, 1):
             print(f"{i}. {color}")
 
+        req = get_required_string("color")
         color_choice = input(
-            "Enter the color of the badge (or choose a number from the list above): "
+            f"{req} Enter the color of the badge (or choose a number from the list above): "
         )
 
         # If the user enters a number, map it to the corresponding color
@@ -137,11 +156,12 @@ def create_badge(args, config):
         return color
 
     badges = config.load_config()  # Load the current config
-    badge_name = (
-        args.badge_name
-        if args.badge_name
-        else input("Enter the name of the new badge: ")
-    )
+
+    if args.badge_name in badges:
+        badge_name = args.badge_name
+    else:
+        req = get_required_string("badge_name")
+        badge_name = input(f"{req} Enter the name of the new badge: ")
 
     # Check for duplicate badge name
     while badge_name in badges:
@@ -161,7 +181,8 @@ def create_badge(args, config):
         if key == "color":
             value = _get_color()
         else:
-            value = input(f"Enter the {key} for the badge: ")
+            req = get_required_string(key)
+            value = input(f"{req} Enter the {key} for the badge: ")
         if value:  # Only add non-empty values to the config
             new_badge_data[key] = value
 

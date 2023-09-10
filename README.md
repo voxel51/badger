@@ -72,9 +72,9 @@ Begins the process of creating an ADA compliant badge for Voxel51 named `voxel51
 
 ```plaintext
 
-> Enter a name for this badge: voxel51_ada
+> [REQUIRED] Enter a name for this badge: voxel51_ada
 
-> Enter the badge text: voxel51
+> [OPTIONAL] Enter the badge text: voxel51
 
 Commonly used colors:
 1. brightgreen
@@ -91,21 +91,21 @@ Commonly used colors:
 12. informational
 13. inactive
 
-> Enter the color of the badge (or choose a number from the list above): blue
+> [OPTIONAL] Enter the color of the badge (or choose a number from the list above): blue
 
-> Enter the badge logo: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
+> [REQUIRED] Enter the badge logo: https://gist.githubusercontent.com/jacobmarks/eb18cc90596f7310e4dad1be2526c070/raw/e05e51be697a9501f64fe8d1b7008fc5ebe56369/fiftyone_icon.svg
 
-> Enter the badge URL: https://github.com/voxel51/fiftyone
+> [REQUIRED] Enter the badge URL: https://github.com/voxel51/fiftyone
 
-> Enter the badge style: flat
+> [OPTIONAL] Enter the badge style: flat
 
-> Enter the badge logoColor: white
+> [OPTIONAL] Enter the badge logoColor: white
 
-> Enter the badge label:
+> [OPTIONAL] Enter the badge label:
 
-> Enter the badge labelColor:
+> [OPTIONAL] Enter the badge labelColor:
 
-> Enter the badge logoWidth:
+> [OPTIONAL] Enter the badge logoWidth:
 
 > Successfully added badge 'voxel51_ada'.
 ```
