@@ -11,8 +11,10 @@ import pyperclip
 import yaml
 
 HOME_DIR = os.path.expanduser("~")
-DEFAULT_BADGER_FILE = os.path.join(HOME_DIR, ".badger")
-BADGER_CONFIG_FILE = os.environ.get("BADGER_CONFIG_FILE", DEFAULT_BADGER_FILE)
+DEFAULT_BADGER_DIR = os.path.join(HOME_DIR, ".badger")
+BADGER_CONFIG_DIR = os.environ.get("BADGER_CONFIG_DIR", DEFAULT_BADGER_DIR)
+BADGER_CONFIG_FILE = os.path.join(BADGER_CONFIG_DIR, "config.yaml")
+
 
 KEYS = (
     "text",
@@ -73,6 +75,11 @@ class BadgerConfig:
 
 # Function to create a default config file with a 'badger' badge
 def create_default_config(file_path):
+    # Create the directory if it does not exist
+    directory = os.path.dirname(file_path)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
     # Get the directory where the script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
 

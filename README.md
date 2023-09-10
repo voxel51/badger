@@ -260,7 +260,7 @@ Once you have created a badge (added it to your config), you can work with modif
 
 ### Editing the Config File
 
-You can also edit the config file directly to customize your badges. The config file is located at `~/.badger` and has the following format:
+You can also edit the config file directly to customize your badges. The config file is located at `~/.badger/config.yaml` and has the following format:
 
 ```yml
 badges:
@@ -295,7 +295,7 @@ badges:
 
 You can add, remove, and edit badges as you see fit. Badger will automatically detect changes to the config file and update your badges accordingly.
 
-💡 You can also set the location of the config file in your environment variables using the `BADGER_CONFIG_FILE` variable.
+💡 You can also set the location of the config file in your environment variables using the `BADGER_CONFIG_DIR` variable.
 
 ## Where to Get Badges
 
