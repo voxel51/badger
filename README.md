@@ -351,3 +351,9 @@ svgo -i input.svg -o output.svg
 - Be Unique: Stand out from the crowd with personalized badges. 🦄
 - Stay Organized: Keep all your badges in one place, ready to be used anytime. 🗂
 - It's Cool: Because let's face it, who doesn't like badges? 😎
+
+## Acknowledgements
+
+Huge shout out to [Rustem Galiullin](https://github.com/Rusteam) and [Kishan Savant](https://github.com/NeoKish) for beta-testing the tool and providing valuable feedback!
+
+- [Shields.io](https://shields.io/) for the awesome badges
