@@ -28,6 +28,30 @@ cd badger
 pip install -e .
 ```
 
+If you want to use Badger with SVGs hosted on the web, you will need to install `requests`. Change the last line to:
+
+```bash
+pip install -e ".[web]"
+```
+
+If you want to use the `badger go-wild` command, you will need to install `openai`. Change the last line to:
+
+```bash
+pip install -e ".[wild]"
+```
+
+And make sure to set your OpenAI API key as an environment variable:
+
+```bash
+export OPENAI_API_KEY=<YOUR_API_KEY>
+```
+
+To install both, change the last line to:
+
+```bash
+pip install -e ".[web,wild]"
+```
+
 ## 📝 Usage
 
 Here's how you can use Badger:
