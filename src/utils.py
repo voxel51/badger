@@ -193,3 +193,31 @@ def save_as_badge(file_name, config):
     config.update_config(badges)
 
     print(f"New badge '{badge_name}' has been saved.")
+
+
+def extract_name_from_github(username):
+    import requests
+    from bs4 import BeautifulSoup
+
+    # Fetch the HTML content of the GitHub profile
+    url = f"https://github.com/{username}"
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the HTML content
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Find the tag containing the user's name
+        name_tag = soup.find(
+            "span", {"class": "p-name vcard-fullname d-block overflow-hidden"}
+        )
+
+        if name_tag:
+            # Extract and print the name
+            name = name_tag.text.strip()
+            return name
+        else:
+            return None
+    else:
+        return None
