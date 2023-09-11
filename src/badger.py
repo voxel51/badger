@@ -208,7 +208,7 @@ def create_fiftyone_contributor_badge(args, config):
 
     badges = config.load_config()  # Load the current config
 
-    if args.badge_name in badges:
+    if args.badge_name:
         badge_name = args.badge_name
     else:
         req = get_required_string("badge_name")
@@ -230,6 +230,7 @@ def create_fiftyone_contributor_badge(args, config):
     new_badge_data = {}
     new_badge_data["label"] = "contributor"
     new_badge_data["labelColor"] = CONTRIBUTOR_LABEL_COLOR
+    new_badge_data["logo"] = "assets/fiftyone.svg"
 
     def _variant_to_color(variant):
         if not variant.isdigit():
@@ -262,7 +263,7 @@ def create_fiftyone_contributor_badge(args, config):
             value = input(f"Enter the GitHub username to link to: ")
             key, value = _handle_props(value, key)
         elif key == "name":
-            username = new_badge_data["username"]
+            username = new_badge_data["url"].split("=")[-1]
             if username:
                 value = extract_name_from_github(username)
                 if not value:
@@ -513,7 +514,7 @@ def main():
         "contribute", help="Create a new fiftyone contributor badge."
     )
     contributor_parser.add_argument(
-        "badge_name", nargs="?", default=None, help="Name of the new badge."
+        "--badge_name", help="Name of the new badge."
     )
     contributor_parser.add_argument(
         "--name", help="Name to be displayed on the badge."
