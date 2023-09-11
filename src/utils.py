@@ -25,7 +25,7 @@ def list_badges(badges):
     for badge_name, args in badges.items():
         url = args.get("url", "N/A")
         color = args.get("color", "N/A")
-        text = args.get("text", "N/A")
+        text = args.get("text", "")
         print(
             "{:<20} {:<50} {:<20} {:<20}".format(badge_name, url, color, text)
         )
@@ -126,7 +126,7 @@ def generate_badge_markdown(badge_config):
 
     # Dynamic URL construction
     base_url = "https://img.shields.io/badge/"
-    badge_text = badge_config.get("text", "N/A").replace(" ", "%20").strip()
+    badge_text = badge_config.get("text", "").replace(" ", "%20").strip()
     color = badge_config.get("color", "blue")
 
     badge_url = f"{base_url}{badge_text}-{color}.svg?"
@@ -221,3 +221,16 @@ def extract_name_from_github(username):
             return None
     else:
         return None
+
+
+def create_unique_badge_name(badges):
+    base = "badge"
+    if base not in badges:
+        return base
+    else:
+        i = 1
+        while True:
+            name = f"{base}{i}"
+            if name not in badges:
+                return name
+            i += 1
