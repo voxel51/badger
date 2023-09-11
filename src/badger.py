@@ -8,6 +8,7 @@
 import argparse
 import os
 import pyperclip
+import sys
 import yaml
 
 HOME_DIR = os.path.expanduser("~")
@@ -17,10 +18,10 @@ BADGER_CONFIG_FILE = os.path.join(BADGER_CONFIG_DIR, "config.yaml")
 
 
 KEYS = (
-    "text",
-    "color",
     "logo",
     "url",
+    "text",
+    "color",
     "style",
     "logoColor",
     "label",
@@ -56,12 +57,18 @@ OPTIONAL_KEYS = (
 
 REQUIRED_KEYS = ("logo", "url", "badge_name")
 
+CONTRIBUTOR_LABEL_COLOR = "212529"
+CONTRIBUTOR_COLORS = ("FF6D04", "499CEF", "6D04FF", "59A65C")
+
+
 from .utils import (
     list_badges,
     generate_badge_markdown,
     save_svg_file,
     save_as_badge,
     print_badge_info,
+    extract_name_from_github,
+    create_unique_badge_name,
 )
 
 from .go_wild_utils import generate_random_svg, generate_trial_badge
@@ -127,7 +134,7 @@ def parse_badger_file():
         return config.get("badges", {})
 
 
-def create_badge(args, config):
+def create_badge(args, config, simple=False):
     """
     Create a new badge based on the provided command-line arguments and update the configuration.
     """
@@ -157,7 +164,70 @@ def create_badge(args, config):
 
     badges = config.load_config()  # Load the current config
 
-    if args.badge_name in badges:
+    SIMPLE_FLAG = simple
+
+    if args.badge_name:
+        badge_name = args.badge_name
+    else:
+        req = get_required_string("badge_name")
+        if SIMPLE_FLAG:
+            badge_name = create_unique_badge_name(badges)
+            print(f"Using unique name '{badge_name}'.")
+        else:
+            badge_name = input(f"{req} Enter the name of the new badge: ")
+
+    # Check for duplicate badge name
+    while badge_name in badges:
+        overwrite = input(
+            f"A badge with the name '{badge_name}' already exists. Do you want to overwrite it? (y/n): "
+        ).lower()
+        if overwrite == "y":
+            break
+        elif overwrite == "n":
+            badge_name = input("Enter a new name for the badge: ")
+        else:
+            print("Invalid input. Please enter 'y' or 'n'.")
+
+    # Dynamic badge data collection
+    new_badge_data = {}
+
+    for key in KEYS:
+        if getattr(args, key, None):
+            value = getattr(args, key)
+        elif key == "color" and not SIMPLE_FLAG:
+            value = _get_color()
+        elif not SIMPLE_FLAG:
+            req = get_required_string(key)
+            value = input(f"{req} Enter the {key} for the badge: ")
+        else:
+            continue
+
+        if value:  # Only add non-empty values to the config
+            new_badge_data[key] = value
+
+    # Update the badges dictionary and save it back to the config file
+    if all(key in new_badge_data for key in ("logo", "url")):
+        badges[badge_name] = new_badge_data
+        config.update_config(badges)
+        print(f"Successfully added badge '{badge_name}'.")
+    else:
+        print("Skipping badge creation due to missing required fields.")
+        print(f"Required fields: {REQUIRED_KEYS}")
+
+
+def create_fiftyone_contributor_badge(args, config, simple=False):
+    """
+    Create a contributor badge based on the provided command-line arguments and update the configuration.
+    """
+
+    CONTRIBUTOR_KEYS = ("username", "name", "variant", "style", "logoWidth")
+    GH_URL = "https://github.com/voxel51/fiftyone/commits?author="
+
+    SIMPLE_FLAG = simple
+
+    badges = config.load_config()  # Load the current config
+
+    if args.badge_name:
         badge_name = args.badge_name
     else:
         req = get_required_string("badge_name")
@@ -177,14 +247,62 @@ def create_badge(args, config):
 
     # Dynamic badge data collection
     new_badge_data = {}
-    for key in KEYS:
-        if key == "color":
-            value = _get_color()
+    new_badge_data["label"] = "contributor"
+    new_badge_data["labelColor"] = CONTRIBUTOR_LABEL_COLOR
+    new_badge_data["logo"] = "assets/fiftyone.svg"
+
+    def _variant_to_color(variant):
+        if not variant.isdigit():
+            variant = 1
+        ## typecast to int and subtract 1 to get the correct index
+        variant = int(variant) - 1
+        return "color", CONTRIBUTOR_COLORS[variant]
+
+    def _username_to_url(username):
+        return "url", GH_URL + username
+
+    def _name_to_text(name):
+        return "text", name
+
+    def _handle_props(value, key):
+        if key == "variant":
+            return _variant_to_color(value)
+        elif key == "username":
+            return _username_to_url(value)
+        elif key == "name":
+            return _name_to_text(value)
+        else:
+            return key, value
+
+    for key in CONTRIBUTOR_KEYS:
+        if getattr(args, key, None):
+            value = getattr(args, key)
+            key, value = _handle_props(value, key)
+        elif key == "username":
+            value = input(f"Enter the GitHub username to link to: ")
+            key, value = _handle_props(value, key)
+        elif key == "name":
+            username = new_badge_data["url"].split("=")[-1]
+            if username:
+                value = extract_name_from_github(username)
+                if not value and not SIMPLE_FLAG:
+                    value = input(
+                        f"Enter the name to be displayed on the badge: "
+                    )
+            elif not SIMPLE_FLAG:
+                value = input(f"Enter the name to be displayed on the badge: ")
+            key, value = _handle_props(value, key)
+        elif key == "variant" and not SIMPLE_FLAG:
+            value = input(f"Enter the variant of the badge [1-4]: ")
+            key, value = _handle_props(value, key)
         else:
             req = get_required_string(key)
-            value = input(f"{req} Enter the {key} for the badge: ")
-        if value:  # Only add non-empty values to the config
-            new_badge_data[key] = value
+            if not SIMPLE_FLAG:
+                value = input(f"{req} Enter the {key} for the badge: ")
+                key, value = _handle_props(value, key)
+            else:
+                continue
+        new_badge_data[key] = value
 
     # Update the badges dictionary and save it back to the config file
     badges[badge_name] = new_badge_data
@@ -364,9 +482,17 @@ def get_badge_info(args, config):
 
 
 def main():
+    SIMPLE_FLAG = "--simple" in sys.argv
+    # Remove --simple to avoid conflicts
+    while "--simple" in sys.argv:
+        sys.argv.remove("--simple")
+
     parser = argparse.ArgumentParser(
         description="Manage custom badges for GitHub READMEs."
     )
+    # parser.add_argument(
+    #     "--simple", action="store_true", help="Skip interactive inputs."
+    # )
     subparsers = parser.add_subparsers(dest="command")
 
     ### CREATE
@@ -374,6 +500,9 @@ def main():
     create_parser.add_argument(
         "badge_name", nargs="?", default=None, help="Name of the new badge."
     )
+    # create_parser.add_argument(
+    #     "--simple", action="store_true", help="Skip interactive inputs."
+    # )
 
     ### DELETE
     delete_parser = subparsers.add_parser("delete", help="Delete a badge.")
@@ -402,7 +531,13 @@ def main():
     clone_parser.add_argument("badge_name", help="Name of the badge to clone.")
     clone_parser.add_argument("new_badge_name", help="Name of the new badge.")
 
-    for sp in [copy_parser, print_parser, clone_parser, edit_parser]:
+    for sp in [
+        create_parser,
+        copy_parser,
+        print_parser,
+        clone_parser,
+        edit_parser,
+    ]:
         sp.add_argument("--text", help="Text override.")
         sp.add_argument("--color", help="Color override.")
         sp.add_argument("--logo", help="Logo file override.")
@@ -412,6 +547,28 @@ def main():
         sp.add_argument("--label", help="Label override.")
         sp.add_argument("--labelColor", help="Label color override.")
         sp.add_argument("--logoWidth", help="Logo width override.")
+
+    ### CREATE FIFTYONE CONTRIBUTOR BADGE
+    contributor_parser = subparsers.add_parser(
+        "contribute", help="Create a new fiftyone contributor badge."
+    )
+    contributor_parser.add_argument(
+        "--badge_name", help="Name of the new badge."
+    )
+    contributor_parser.add_argument(
+        "--name", help="Name to be displayed on the badge."
+    )
+    contributor_parser.add_argument(
+        "--username", help="GitHub username to link to."
+    )
+    contributor_parser.add_argument(
+        "--variant", help="Variant of the badge [1-4]."
+    )
+    contributor_parser.add_argument("--style", help="Style override.")
+    contributor_parser.add_argument("--logoWidth", help="Logo width override.")
+    # contributor_parser.add_argument(
+    #     "--simple", action="store_true", help="Skip interactive inputs."
+    # )
 
     ### GO WILD
     go_wild_parser = subparsers.add_parser(
@@ -436,7 +593,11 @@ def main():
     badges = badger_config.load_config()
 
     if args.command == "create":
-        create_badge(args, badger_config)
+        create_badge(args, badger_config, simple=SIMPLE_FLAG)
+    elif args.command == "contribute":
+        create_fiftyone_contributor_badge(
+            args, badger_config, simple=SIMPLE_FLAG
+        )
     elif args.command == "delete":
         delete_badge(args, badger_config)
     elif args.command == "copy":

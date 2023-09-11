@@ -25,7 +25,7 @@ def list_badges(badges):
     for badge_name, args in badges.items():
         url = args.get("url", "N/A")
         color = args.get("color", "N/A")
-        text = args.get("text", "N/A")
+        text = args.get("text", "")
         print(
             "{:<20} {:<50} {:<20} {:<20}".format(badge_name, url, color, text)
         )
@@ -126,7 +126,7 @@ def generate_badge_markdown(badge_config):
 
     # Dynamic URL construction
     base_url = "https://img.shields.io/badge/"
-    badge_text = badge_config.get("text", "N/A").replace(" ", "%20").strip()
+    badge_text = badge_config.get("text", "").replace(" ", "%20").strip()
     color = badge_config.get("color", "blue")
 
     badge_url = f"{base_url}{badge_text}-{color}.svg?"
@@ -193,3 +193,44 @@ def save_as_badge(file_name, config):
     config.update_config(badges)
 
     print(f"New badge '{badge_name}' has been saved.")
+
+
+def extract_name_from_github(username):
+    import requests
+    from bs4 import BeautifulSoup
+
+    # Fetch the HTML content of the GitHub profile
+    url = f"https://github.com/{username}"
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the HTML content
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Find the tag containing the user's name
+        name_tag = soup.find(
+            "span", {"class": "p-name vcard-fullname d-block overflow-hidden"}
+        )
+
+        if name_tag:
+            # Extract and print the name
+            name = name_tag.text.strip()
+            return name
+        else:
+            return None
+    else:
+        return None
+
+
+def create_unique_badge_name(badges):
+    base = "badge"
+    if base not in badges:
+        return base
+    else:
+        i = 1
+        while True:
+            name = f"{base}{i}"
+            if name not in badges:
+                return name
+            i += 1

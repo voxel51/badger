@@ -112,6 +112,22 @@ Commonly used colors:
 
 💡 As show in this example, you can create a badge from an SVG at a URL! If you do so, the content of the SVG will be retrieved at badge generation time using `requests`. You can also use local SVGs by specifying the relative or absolute path to the SVG file.
 
+#### 💡 Simple Mode
+
+You can also create a badge in simple mode by passing the `--simple` flag:
+
+```bash
+badger create --simple --badge_name simple_badge --logo assets/fiftyone.svg --url https://github.com/voxel51/fiftyone --text FiftyOne
+```
+
+This will bypass the optional prompts and create a badge with the specified parameters. The `--simple` flag can be used anywhere in the command, before or after the `create` command.
+
+If you find yourself wanting to use this mode often, you can create an alias for it:
+
+```bash
+alias badgers="badger create --simple"
+```
+
 ### 📋 Copy a Badge to Clipboard
 
 ```bash
