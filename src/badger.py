@@ -162,7 +162,7 @@ def create_badge(args, config):
 
     badges = config.load_config()  # Load the current config
 
-    if args.badge_name in badges:
+    if args.badge_name:
         badge_name = args.badge_name
     else:
         req = get_required_string("badge_name")
@@ -527,6 +527,9 @@ def main():
     )
     contributor_parser.add_argument("--style", help="Style override.")
     contributor_parser.add_argument("--logoWidth", help="Logo width override.")
+    contributor_parser.add_argument(
+        "--simple", action="store_true", help="Skip interactive inputs."
+    )
 
     ### GO WILD
     go_wild_parser = subparsers.add_parser(
