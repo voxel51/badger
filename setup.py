@@ -12,11 +12,9 @@ setup(
     name="badger",
     version="0.1",
     packages=find_packages(),
-    install_requires=[
-        "pyperclip",
-    ],
+    install_requires=["argparse", "pyperclip", "xml"],
     extras_require={
-        "web": ["requests"],
+        "web": ["bs4", "requests"],
         "wild": ["openai"],
     },
     entry_points={"console_scripts": ["badger = src.badger:main"]},
