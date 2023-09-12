@@ -254,6 +254,7 @@ def create_fiftyone_contributor_badge(args, config, simple=False):
     new_badge_data["label"] = "contributor"
     new_badge_data["labelColor"] = CONTRIBUTOR_LABEL_COLOR
     new_badge_data["logo"] = "assets/fiftyone.svg"
+    new_badge_data["logoColor"] = "white"
 
     def _variant_to_color(variant):
         if not variant.isdigit():
