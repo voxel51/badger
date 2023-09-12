@@ -231,7 +231,11 @@ def create_fiftyone_contributor_badge(args, config, simple=False):
         badge_name = args.badge_name
     else:
         req = get_required_string("badge_name")
-        badge_name = input(f"{req} Enter the name of the new badge: ")
+        if SIMPLE_FLAG:
+            badge_name = create_unique_badge_name(badges)
+            print(f"Using unique name '{badge_name}'.")
+        else:
+            badge_name = input(f"{req} Enter the name of the new badge: ")
 
     # Check for duplicate badge name
     while badge_name in badges:
